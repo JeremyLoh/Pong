@@ -31,17 +31,6 @@ function love.load()
     })
 end
 
--- Called by Love2D for each frame after update
-function love.draw()
-    love.graphics.printf(
-        "Hello Pong Low Res!",
-        0,
-        WINDOW_HEIGHT/2 -6,
-        WINDOW_WIDTH,
-        "center"
-    )
-end
-
 --[[
     Keyboard handling, called by Love2D for each frame
     Passes in the key we pressed so that we can access
@@ -53,6 +42,7 @@ function love.keypressed(key)
     end
 end
 
+-- Called by Love2D for each frame after update
 function love.draw()
     -- Begin rendering at virtual resolution
     push:start()
