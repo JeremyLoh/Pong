@@ -15,6 +15,7 @@ push = require "push"
 Class = require "class"
 
 require "Ball"
+require "Paddle"
 
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
@@ -51,9 +52,10 @@ function love.load()
     -- Initialize score variables for players
     player1Score = 0
     player2Score = 0
-    -- Paddle position on the Y axis (moves only up or down)
-    player1Y = 30
-    player2Y = VIRTUAL_HEIGHT - 50
+
+    -- Create player paddles (paddle moves along Y axis)
+    player1 = Paddle(10, 30, PADDLE_WIDTH, PADDLE_HEIGHT)
+    player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 50, PADDLE_WIDTH, PADDLE_HEIGHT)
 
     -- Game state variable used to transition between different parts of the game
     -- (used for beginning, menus, main game, high score list, etc.)
@@ -70,7 +72,6 @@ function love.keypressed(key)
         elseif gameState == "play" then 
             -- Reset game state
             gameState = "start"
-            -- Reset ball position to middle of screen
             ball:reset()
         end
     end
@@ -80,20 +81,23 @@ end
     Runs on every frame, with deltaTime (dt) passed in, the delta in seconds since the last frame (supplied by Love2D)
 ]]
 function love.update(dt)
-    paddleMovement = PADDLE_SPEED * dt
     -- Player 1 movement
     if love.keyboard.isDown("w") then
         -- Reduce Y to move towards top of screen (start is at 0)
-        player1Y = math.max(0, player1Y - paddleMovement)
+        player1.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown("s") then 
-        player1Y = math.min(VIRTUAL_HEIGHT - PADDLE_HEIGHT, player1Y + paddleMovement)
+        player1.dy = PADDLE_SPEED
+    else 
+        player1.dy = 0
     end
 
     -- Player 2 movement
     if love.keyboard.isDown("up") then
-        player2Y = math.max(0, player2Y - paddleMovement)
+        player2.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown("down") then 
-        player2Y = math.min(VIRTUAL_HEIGHT - PADDLE_HEIGHT, player2Y + paddleMovement)
+        player2.dy = PADDLE_SPEED
+    else 
+        player2.dy = 0
     end
 
     -- Check for play state
@@ -101,6 +105,8 @@ function love.update(dt)
         -- Update ball position, scaled velocity by dt so movement is framerate independent
         ball:update(dt)
     end
+    player1:update(dt)
+    player2:update(dt)
 end
 
 function love.draw()
@@ -121,11 +127,9 @@ function love.draw()
     love.graphics.print(tostring(player1Score), VIRTUAL_WIDTH/2 - 50, 10)
     love.graphics.print(tostring(player2Score), VIRTUAL_WIDTH/2 + 25, 10)
 
-    -- render player 1 paddle (left side)
-    love.graphics.rectangle("fill", 10, player1Y, PADDLE_WIDTH, PADDLE_HEIGHT)
-    -- render second paddle (right side)
-    love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, player2Y, PADDLE_WIDTH, PADDLE_HEIGHT)
-    -- render ball
+    -- Render objects
+    player1:render()
+    player2:render()
     ball:render()
 
     -- End rendering at virtual resolution
