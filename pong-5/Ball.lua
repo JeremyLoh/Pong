@@ -9,14 +9,14 @@ function Ball:init(x, y, width, height)
     self.y = y
     self.width = width
     self.height = height
+    -- "Seed" the RNG (math.random) so that calls to random are random using current time
+    math.randomseed(os.time())
     -- Set ball speed for x and y axis
     self:newBallSpeed()
 end
 
 function Ball:newBallSpeed()
-    -- "Seed" the RNG (math.random) so that calls to random are random using current time
-    math.randomseed(os.time())
-    self.dx = math.random(2) and 100 or -100
+    self.dx = math.random(2) == 1 and 100 or -100
     self.dy = math.random(-50, 50)
 end
 
