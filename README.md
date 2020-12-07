@@ -2,6 +2,9 @@
 
 Atari's 1972 classic, implemented in Lua with LÖVE
 
+The finished game (Windows 64 bit) is located at `Pong-Final-Game` directory (https://github.com/JeremyLoh/Pong/tree/main/Pong-Final-Game).
+To play the game, download this directory and run the `pong.exe` file. 
+
 # What is Lua?
 
 Portuguese for "moon", invented in 1993 in Brazil
