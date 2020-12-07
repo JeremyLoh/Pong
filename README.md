@@ -5,6 +5,13 @@ Atari's 1972 classic, implemented in Lua with LÖVE
 The finished game (Windows 64 bit) is located at `Pong-Final-Game` directory (https://github.com/JeremyLoh/Pong/tree/main/Pong-Final-Game).
 To play the game, download this directory and run the `pong.exe` file. 
 
+# Playing the game
+
+The current game version is for 2 players. Each player controls a paddle that can only move up or down. Player 1 controls the left paddle with the `W` and `S` keys on the keyboard while Player 2 controls the right paddle with the `UP` and `DOWN` arrow keys on the keyboard. A point will be awarded when the ball gets past your opponent's edge. The first player to reach 10 points wins! 
+
+![image](https://user-images.githubusercontent.com/38811217/101348661-f630b780-38c6-11eb-92b1-5289999bb06d.png)
+![image](https://user-images.githubusercontent.com/38811217/101348778-309a5480-38c7-11eb-9ff3-52eaa2388b97.png)
+
 # What is Lua?
 
 Portuguese for "moon", invented in 1993 in Brazil
